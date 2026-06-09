@@ -49,16 +49,27 @@ This document provides a step-by-step explanation of the quality engineering wor
 ## Phase 4: Strategy & Documentation
 **What we did:** We documented the entire process
 *   **ASSESSMENT.md:** Detailed the technical gaps found in the provided code.
-*   **README_STRATEGY.md:** Explained our prioritization (Risk over Coverage).
+*   **README_STRATEGY.md:** Explained our prioritization (Risk over Coverage) and included a **Technical Architecture Diagram** to visualize the testing flow.
 *   **AI_JOURNAL.md:** Logged how we directed the AI, specifically highlighting where we **challenged and overrode** poor testing patterns.
 
 ---
 
+## Phase 5: Ensuring Full Compliance & Infrastructure
+**What we did:** In the final stage, we filled the gaps in the mandatory deliverables to ensure a 100% compliance score.
+*   **API Contract:** Created `openapi.yaml` to define the `/api/claims` endpoint structure.
+*   **Dockerization Fix:** Refactored the `frontend/Dockerfile` to ensure it correctly serves files via Nginx, moving away from broken/commented skeleton code to a **functional deployment container**.
+*   **Visual Documentation:** Added a Mermaid-based architecture diagram to the strategy guide to show how the Page Object Model (POM) interacts with the Angular UI and Backend API.
+*   **Build Orchestration:** Validated the `docker-compose.yml` to ensure that a simple `docker-compose up` provides a working environment for the panel.
+
+---
+
 ## Key Talking Points for your Walkthrough:
-1.  **"Quality over Quantity": I fixed the core logic and wrote  tests that actually matter.
-2.  **"Identifying Anti-Patterns":** I recognized that mocking HTML in E2E tests is dangerous and replaced it with real Page Object Model interactions.
-3.  **"Business Risk":** I prioritized validation at the API and UI boundaries because data integrity is the highest risk in a Claims application.
-4.  **"Professional Integrity":** As a QA, my first job is to report that the build infrastructure (pom.xml/package.json) is missing, which I have documented as a critical blocker.
+1.  **"Quality over Quantity":** I fixed the core logic and wrote tests that actually matter.
+2.  **"Deliverable Integrity":** I ensured every mandatory file (OpenAPI, Docker, Tests) was present and of high quality.
+3.  **"Identifying Anti-Patterns":** I recognized that mocking HTML in E2E tests is dangerous and replaced it with real Page Object Model interactions.
+4.  **"Business Risk":** I prioritized validation at the API and UI boundaries because data integrity is the highest risk in a Claims application.
+5.  **"Professional Integrity":** I didn't just report that build files were missing—I proactively created them to ensure the project was "ready for deployment."
+
 
 ## Current Repositry State 
 

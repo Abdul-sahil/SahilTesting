@@ -30,3 +30,11 @@
 * **What I Requested:** A summary of all findings and tests.
 * **What I Accepted:** The updated README_STRATEGY.md and ASSESSMENT.md.
 * **What I Overrode:** I explicitly documented the "hollow" state of the app as a primary finding, rather than just adding tests and ignoring the broken core.
+
+---
+
+### Entry 8: Final Compliance & Infrastructure Push
+* **What I Requested:** Generation of missing mandatory deliverables (OpenAPI, Dockerfiles, Maven pom.xml).
+* **What I Accepted:** Creating a formal `openapi.yaml` contract and functional build files.
+* **What I Overrode:** I initially accepted a generic Dockerfile, but later **manually directed a refactor** of the frontend Dockerfile to ensure it wasn't just a placeholder but a functional Nginx-based server. I also directed the inclusion of an **Architecture Diagram** in the README to provide visual clarity for the hiring panel.
+* **Reasoning:** A senior engineer doesn't just write good code; they ensure the project is "demo-ready" and clearly communicated. Infrastructure and visualization are the "last 10%" that separate a good candidate from a great one.

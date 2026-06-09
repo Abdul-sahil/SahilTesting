@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: Claims Management API
+  description: API for submitting and processing insurance claims.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local development server
+paths:
+  /claims:
+    post:
+      summary: Submit a new claim
+      description: Validates and processes a new insurance claim.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+      responses:
+        '200':
+          description: Claim submitted successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Claim submitted successfully
+        '400':
+          description: Invalid input (e.g., negative amount or missing fields)
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Claim amount cannot be negative
+components:
+  schemas:
+    Claim:
+      type: object
+      required:
+        - id
+        - policyNumber
+        - amount
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the claim
+          example: "C12345"
+        policyNumber:
+          type: string
+          description: The policy number associated with the claim
+          example: "POL-98765"
+        amount:
+          type: number
+          format: double
+          description: The claim amount (must be non-negative)
+          minimum: 0
+          example: 1500.50
+        description:
+          type: string
+          description: Optional description of the claim
+          example: "Water damage in the basement"
