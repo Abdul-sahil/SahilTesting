@@ -1,0 +1,23 @@
+{
+  "name": "sahiltesting",
+  "version": "1.0.0",
+  "description": "The test cases are written by using Gemini",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdul-sahil/SahilTesting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Abdul-sahil/SahilTesting/issues"
+  },
+  "homepage": "https://github.com/Abdul-sahil/SahilTesting#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.2"
+  }
+}
