@@ -6,9 +6,29 @@ The test cases in this repository were written using the Gemini CLI to assist wi
 
 Because I did not have the live application to test against for this take-home assessment, I utilized a skeleton codebase from online to serve as the structural framework. I then built and performed the test cases according to the specific assessment requirements provided below.
 
----
+## Project Architecture & Testing Strategy
 
-### Take-Home QA Assessment Details
+```mermaid
+graph TD
+    User([User/QA]) -->|Runs| PW[Playwright E2E Suite]
+    PW -->|Uses| POM[Page Object Model]
+    POM -->|Interacts with| UI[Functional UI Fallback]
+    UI -->|Calls| API[Spring Boot REST API]
+    API -->|Validates| Model[Claim Model]
+    
+    subgraph "Infrastructure"
+    Docker[Docker Compose] --> Backend[Spring Boot]
+    Docker --> Frontend[Nginx/UI]
+    Backend -.->|Kafka Messaging| Infrastructure[Kafka/Zookeeper]
+    end
+```
+
+For more detailed information, please refer to:
+- [ASSESSMENT.md](./ASSESSMENT.md): Detailed project audit and technical gaps.
+- [README_STRATEGY.md](./README_STRATEGY.md): Comprehensive test strategy and risk analysis.
+- [WALKTHROUGH_GUIDE.md](./WALKTHROUGH_GUIDE.md): Step-by-step guide of the restoration process.
+- [PRESENTATION.md](./PRESENTATION.md): Presentation slides for the hiring panel.
+- [AI_JOURNAL.md](./AI_JOURNAL.md): Log of the AI collaboration process.
 **Role:** QA Engineer  
 **Project:** Claims Management Application  
 

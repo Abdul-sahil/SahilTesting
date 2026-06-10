@@ -3,7 +3,7 @@
 ## 1. Executive Overview
 - **Project State:** Initially a "hollow skeleton" with missing build files, models, and services.
 - **Mission:** Transition from a broken, non-functional codebase to a testable, production-ready quality engineering framework.
-- **Core Strategy:** Prioritize "Quality over Quantity" by fixing fundamental blockers and implementing multi-tier testing.
+- **Core Strategy:** Prioritize "Quality over Quantity" by restoring core backend logic and implementing a functional UI fallback for robust E2E testing.
 
 ---
 
@@ -12,8 +12,8 @@
 ### 2.1. Multi-Tier Testing Strategy
 - **Layered Approach:** 
     - **Unit Tests:** JUnit 5 for API boundaries and business logic.
-    - **Component Tests:** Angular Testing Library for UI feedback loops.
-    - **E2E Tests:** Playwright for full user journey verification.
+    - **Component Tests:** Angular Testing Library for skeleton validation.
+    - **E2E Tests:** Playwright for full user journey verification against a functional UI.
 - **Rationale:** Ensures defects are caught at the earliest possible stage (Shift Left) while providing high-confidence integration coverage.
 
 ### 2.2. Page Object Model (POM) Implementation
@@ -21,9 +21,9 @@
 - **Rationale:** Respects the Single Responsibility Principle, making tests more maintainable and resilient to UI changes.
 - **Semantic Locators:** Shifted from CSS/XPaths to `getByRole` and `getByLabel` for robust, accessible-first testing.
 
-### 2.3. OpenAPI as the Source of Truth
-- **Decision:** Defined a formal `openapi.yaml` contract.
-- **Rationale:** Acts as the "API Contract" that aligns backend development, frontend consumption, and automated testing.
+### 2.3. Hybrid Frontend Strategy
+- **Decision:** Maintained Angular structure while providing a functional plain HTML fallback for testing.
+- **Rationale:** Ensures the test suite provides value immediately, even while the full Angular application is under construction.
 
 ---
 
@@ -35,7 +35,7 @@
 - **Impact:** Transformed a "passing but broken" suite into a meaningful verification tool.
 
 ### 3.2. Proactive Infrastructure Restoration
-- **Decision:** Created missing `pom.xml`, `package.json`, and `Dockerfiles`.
+- **Decision:** Created missing `pom.xml`, `openapi.yaml`, and functional `Dockerfiles`.
 - **Rationale:** A senior engineer ensures the project is not just "coded" but "buildable" and "deployable."
 
 ---
@@ -46,7 +46,7 @@
 | :--- | :--- | :--- |
 | **Infrastructure vs. Quality** | Focused on restoring testability and fixing source code rather than full CI/CD pipeline setup. | Given the "hollow" state, restoring the "engine" was more critical than building the "highway." |
 | **Mocking Strategy** | Mocked the Backend API in E2E tests (for now). | Ensures environmental stability and faster feedback loops while the real backend logic is being fleshed out. |
-| **Vanilla CSS vs. Framework** | Stick to Angular's default styling. | Minimized external dependencies to focus on core functionality and testing integrity. |
+| **Vanilla CSS vs. Framework** | Stick to Angular's default styling / Plain HTML. | Minimized external dependencies to focus on core functionality and testing integrity. |
 
 ---
 
@@ -56,21 +56,21 @@
 graph TD
     User([User/QA]) -->|Runs| PW[Playwright E2E Suite]
     PW -->|Uses| POM[Page Object Model]
-    POM -->|Interacts with| UI[Angular Frontend]
+    POM -->|Interacts with| UI[Functional UI Fallback]
     UI -->|Calls| API[Spring Boot REST API]
     API -->|Validates| Model[Claim Model]
     
     subgraph "Infrastructure Layer"
     Docker[Docker Compose] --> Backend[Spring Boot Service]
-    Docker --> Frontend[Nginx / Angular App]
+    Docker --> Frontend[Nginx / UI Fallback]
     Docker --> Kafka[Kafka Message Broker]
     Kafka --> Zookeeper[Zookeeper]
-    Backend -.->|Produces/Consumes| Kafka
+    Backend -.->|Simulates| Kafka
     end
     
     subgraph "Verification Layers"
     Unit[JUnit 5 Unit Tests] -.->|Verify| API
-    Comp[Angular Component Tests] -.->|Verify| UI
+    Comp[Angular Component Tests] -.->|Verify| AngularSkeleton[Angular Skeleton]
     end
 ```
 
