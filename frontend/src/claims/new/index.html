@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claims Management - New Claim</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        form { display: flex; flex-direction: column; max-width: 400px; }
+        label { margin-top: 10px; }
+        input, textarea, button { margin-top: 5px; padding: 8px; }
+        .success { color: green; margin-top: 15px; border: 1px solid green; padding: 10px; }
+        .error { color: red; margin-top: 15px; border: 1px solid red; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Submit New Claim</h1>
+    <form id="claim-form">
+        <label for="claim-id">Claim ID</label>
+        <input id="claim-id" name="id" required>
+
+        <label for="policy-number">Policy Number</label>
+        <input id="policy-number" name="policyNumber" required>
+
+        <label for="amount">Claim Amount</label>
+        <input id="amount" type="number" name="amount" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <button type="submit">Submit</button>
+        
+        <div id="success-msg" class="success" style="display:none">Claim submitted successfully</div>
+        <div id="error-msg" class="error" role="alert" style="display:none"></div>
+    </form>
+    <script>
+        document.getElementById('claim-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                id: document.getElementById('claim-id').value,
+                policyNumber: document.getElementById('policy-number').value,
+                amount: parseFloat(document.getElementById('amount').value),
+                description: document.getElementById('description').value
+            };
+            
+            // Note: The actual API call is mocked in Playwright tests
+            try {
+                const resp = await fetch('/api/claims', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (resp.ok) {
+                    const result = await resp.json();
+                    document.getElementById('success-msg').style.display = 'block';
+                    document.getElementById('error-msg').style.display = 'none';
+                    document.getElementById('success-msg').innerText = result;
+                } else {
+                    const result = await resp.json();
+                    document.getElementById('error-msg').innerText = result;
+                    document.getElementById('error-msg').style.display = 'block';
+                    document.getElementById('success-msg').style.display = 'none';
+                }
+            } catch (err) {
+                document.getElementById('error-msg').innerText = 'Submission failed';
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
